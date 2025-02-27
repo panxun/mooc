@@ -51,8 +51,8 @@ jobs:
 
       - name: Build linux_s390x
         run: |
-          sudo apt-get -y install libc6-dev-s390x
-          CC=gcc CGO_ENABLED=1 GOOS=linux GOARCH=s390x go build -trimpath -o aoaostar_mooc_linux_s390x/aoaostar_mooc main.go
+          sudo apt-get update && sudo apt-get install -y gcc-s390x-linux-gnu g++-s390x-linux-gnu
+          GOOS=linux GOARCH=s390x go build -o myapp_s390x main.go
       - name: Copy additional files
         run: |
           ls | grep "aoaostar_mooc_" | awk '{ print "cp sample.config.json "$0"/config.json" | "/bin/bash" }'
