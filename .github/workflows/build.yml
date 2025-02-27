@@ -88,3 +88,9 @@ jobs:
         with:
           name: aoaostar_mooc_linux_386
           path: aoaostar_mooc_linux_386
+
+        - name: Upload artifacts linux_s390x
+        uses: actions/upload-artifact@v2
+        with:
+          name: aoaostar_mooc_linux_s390x
+          path: aoaostar_mooc_linux_s390x
