@@ -128,3 +128,14 @@ jobs:
           asset_path: aoaostar_mooc_windows_amd64.zip
           asset_name: aoaostar_mooc_${{ steps.get_version.outputs.VERSION }}_windows_amd64.zip
           asset_content_type: application/zip
+
+      - name: Upload aoaostar_mooc_linux_s390x
+        id: upload-release-linux-s390x
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: aoaostar_mooc_linux_s390x.zip
+          asset_name: aoaostar_mooc_${{ steps.get_version.outputs.VERSION }}_linux_s390x.zip
+          asset_content_type: application/zip
