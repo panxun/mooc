@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"math"
 	"sync"
+	"net/smtp"
 )
 
 type Task struct {
@@ -17,6 +18,25 @@ type Task struct {
 }
 
 var Tasks []Task
+
+// SendQQEmail 用于通过 QQ 邮箱发送邮件
+func SendQQEmail(from, password, to, subject, body string) error {
+    // QQ 邮箱的 SMTP 服务器地址和端口
+    smtpServer := "smtp.qq.com:587"
+
+    // 构建邮件内容
+    message := []byte(fmt.Sprintf("To: %s\r\nFrom: %s\r\nSubject: %s\r\n\r\n%s", to, from, subject, body))
+
+    // 创建认证信息
+    auth := smtp.PlainAuth("", from, password, "smtp.qq.com")
+
+    // 发送邮件
+    err := smtp.SendMail(smtpServer, auth, from, []string{to}, message)
+    if err != nil {
+        return err
+    }
+    return nil
+}
 
 func Start() {
 	limit := int(math.Min(float64(config.Conf.Global.Limit), float64(len(Tasks))))
@@ -39,7 +59,18 @@ func Start() {
 	}
 	close(jobs)
 	wg.Wait()
+	from := "panxun188@qq.com"
+    	password := "pasknjesvbzqdebh"
+    	to := "panxun188@qq.com"
+    	subject := "刷课完成"
+    	body := "所有任务已经完成。"
 	logrus.Infof("恭喜您, 所有任务都已全部完成~~~")
+	SendQQEmail(from, password, to, subject, body)
+	if err != nil {
+        fmt.Println("发送邮件失败:", err)
+    	} else {
+        fmt.Println("邮件发送成功")
+    	}
 }
 
 func work(task Task) {
