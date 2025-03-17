@@ -95,7 +95,6 @@
 #           name: yh_s390x
 #           path: yh_s390x
 
-
 name: build
 
 on:
@@ -141,14 +140,18 @@ jobs:
         id: short-sha
         run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
+      - name: Generate timestamp
+        id: timestamp
+        run: echo "timestamp=$(date +%Y%m%d%H%M%S)" >> $GITHUB_OUTPUT
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.short_sha.outputs.short_sha }}
-          release_name: Release v${{ steps.short_sha.outputs.short_sha }}
+          tag_name: v${{ steps.short_sha.outputs.short_sha }}-${{ steps.timestamp.outputs.timestamp }}
+          release_name: Release v${{ steps.short_sha.outputs.short_sha }}-${{ steps.timestamp.outputs.timestamp }}
           draft: false
           prerelease: false
 
