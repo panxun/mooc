@@ -48,13 +48,13 @@ jobs:
         run: |
           sudo apt-get -y install libc6-dev-i386
           CC=gcc CGO_ENABLED=1 GOOS=linux GOARCH=386 go build -trimpath -o aoaostar_mooc_linux_386/aoaostar_mooc main.go
-      - name: compress
-        run: |
-          ls | grep "aoaostar_mooc_" | awk '{ print "cp sample.config.json "$0"/config.json" | "/bin/bash" }'
-          ls | grep "aoaostar_mooc_" | awk '{ print "cp -r view "$0"/view" | "/bin/bash" }'
-          ls | grep "windows" | awk '{ print "cp -r scripts/*.bat "$0"" | "/bin/bash" }'
-          ls | grep "linux" | awk '{ print "tar -zcvf "$0".tar.gz "$0 | "/bin/bash" }'
-          zip -r aoaostar_mooc_windows_amd64.zip aoaostar_mooc_windows_amd64
+      # - name: compress
+      #   run: |
+      #     ls | grep "aoaostar_mooc_" | awk '{ print "cp sample.config.json "$0"/config.json" | "/bin/bash" }'
+      #     ls | grep "aoaostar_mooc_" | awk '{ print "cp -r view "$0"/view" | "/bin/bash" }'
+      #     ls | grep "windows" | awk '{ print "cp -r scripts/*.bat "$0"" | "/bin/bash" }'
+      #     ls | grep "linux" | awk '{ print "tar -zcvf "$0".tar.gz "$0 | "/bin/bash" }'
+      #     zip -r aoaostar_mooc_windows_amd64.zip aoaostar_mooc_windows_amd64
 
       - name: Build Changelog
         id: github_release
