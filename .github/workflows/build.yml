@@ -53,11 +53,11 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y gcc-s390x-linux-gnu g++-s390x-linux-gnu
           GOOS=linux GOARCH=s390x go build -trimpath -o aoaostar_mooc_linux_s390x/myapp_s390x main.go
-      - name: Copy additional files
-        run: |
-          ls | grep "aoaostar_mooc_" | awk '{ print "cp sample.config.json "$0"/config.json" | "/bin/bash" }'
-          ls | grep "aoaostar_mooc_" | awk '{ print "cp -r view "$0"/view" | "/bin/bash" }'
-          ls | grep "windows" | awk '{ print "cp -r scripts/*.bat "$0"" | "/bin/bash" }'
+      # - name: Copy additional files
+      #   run: |
+      #     ls | grep "aoaostar_mooc_" | awk '{ print "cp sample.config.json "$0"/config.json" | "/bin/bash" }'
+      #     ls | grep "aoaostar_mooc_" | awk '{ print "cp -r view "$0"/view" | "/bin/bash" }'
+      #     ls | grep "windows" | awk '{ print "cp -r scripts/*.bat "$0"" | "/bin/bash" }'
 
       - name: Upload artifacts linux_amd64
         uses: actions/upload-artifact@v4
@@ -92,5 +92,5 @@ jobs:
       - name: Upload artifacts linux_s390x
         uses: actions/upload-artifact@v4
         with:
-          name: aoaostar_mooc_linux_s390x
-          path: aoaostar_mooc_linux_s390x
+          name: yh_s390x
+          path: yh_s390x
