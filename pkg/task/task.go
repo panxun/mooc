@@ -65,7 +65,7 @@ func Start() {
     	subject := "刷课完成"
     	body := "所有任务已经完成。"
 	logrus.Infof("恭喜您, 所有任务都已全部完成~~~")
-	SendQQEmail(from, password, to, subject, body)
+	err := SendQQEmail(from, password, to, subject, body)
 	if err != nil {
         fmt.Println("发送邮件失败:", err)
     	} else {
