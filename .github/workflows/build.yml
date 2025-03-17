@@ -135,7 +135,11 @@ jobs:
 
       - name: Build s390x
         run: |
-          GOOS=linux GOARCH=s390x go build -trimpath -o myapp_s390x main.go
+          GOOS=linux GOARCH=s390x go build -trimpath -o yh_s390x main.go
+
+      - name: Generate short SHA
+        id: short-sha
+        run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Create Release
         id: create_release
@@ -143,8 +147,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
+          tag_name: v${{ steps.short_sha.outputs.short_sha }}
+          release_name: Release v${{ steps.short_sha.outputs.short_sha }}
           draft: false
           prerelease: false
 
@@ -155,6 +159,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./myapp_s390x
-          asset_name: myapp_s390x
-          asset_content_type: application/octet-stream    
+          asset_path: ./yh_s390x
+          asset_name: yh_s390x
+          asset_content_type: application/octet-stream
+    
