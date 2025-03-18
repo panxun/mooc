@@ -21,7 +21,7 @@ func Run() {
 		logrus.Fatal(err)
 	}
 
-	go InitWeb()
+	// go InitWeb()
 
 	for _, user := range config.Conf.Users {
 		send(user)
